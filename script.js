@@ -1,4 +1,4 @@
-// Page loader animation & fadeout
+
 window.addEventListener('load', () => {
   const loader = document.getElementById('page-loader');
   loader.style.opacity = '0';
@@ -6,47 +6,10 @@ window.addEventListener('load', () => {
   setTimeout(() => loader.remove(), 1200);
 });
 
-// Projects button click event
+
 document.getElementById('projectsBtn').addEventListener('click', () => {
   window.location.href = '#projects';
 });
-
-// DEMO 1: Typing Simulator
-const typingText = document.getElementById('typingText');
-const textLines = [
-  "console.log('Welcome to my portfolio!');",
-  "let passion = 'web development';",
-  "const coolDemos = ['typing', 'glitch', 'canvas', 'parallax', 'carousel'];",
-  "function amaze() {",
-  "  return 'You are impressed!';",
-  "}",
-  "amaze();"
-];
-
-let lineIndex = 0;
-let charIndex = 0;
-
-function typeLine() {
-  if (lineIndex >= textLines.length) {
-    // Restart the loop
-    lineIndex = 0;
-    charIndex = 0;
-    typingText.textContent = ''; // Clear text before restarting
-  }
-
-  const currentLine = textLines[lineIndex];
-
-  if (charIndex < currentLine.length) {
-    typingText.textContent += currentLine.charAt(charIndex);
-    charIndex++;
-    setTimeout(typeLine, 40); // Adjust typing speed here
-  } else {
-    typingText.textContent += '\n'; // Add line break
-    lineIndex++;
-    charIndex = 0;
-    setTimeout(typeLine, 500); // Pause between lines
-  }
-}
 
   document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll("section");
@@ -56,20 +19,17 @@ function typeLine() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
-            observer.unobserve(entry.target); // Animate only once
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1 } // Trigger when 10% is visible
+      { threshold: 0.1 }
     );
 
     sections.forEach((section) => {
       observer.observe(section);
     });
   });
-
-// Start typing effect
-typeLine();
 
 
 function typeNextChar() {
@@ -87,9 +47,6 @@ function typeNextChar() {
 }
 typeNextChar();
 
-// DEMO 2: Glitch Effect handled by CSS animations
-
-// DEMO 3: Particle Canvas
 const canvas = document.getElementById('canvasDemo');
 const ctx = canvas.getContext('2d');
 
@@ -144,7 +101,7 @@ function animateParticles() {
 }
 animateParticles();
 
-// DEMO 4: Parallax Tilt
+
 const parallaxCard = document.querySelector('.parallax-card');
 parallaxCard.addEventListener('mousemove', (e) => {
   const rect = parallaxCard.getBoundingClientRect();
@@ -160,7 +117,7 @@ parallaxCard.addEventListener('mouseleave', () => {
   parallaxCard.style.transform = 'rotateX(0) rotateY(0) scale(1)';
 });
 
-// DEMO 5: 3D Carousel
+
 const carousel = document.querySelector('.carousel');
 const items = carousel.querySelectorAll('.carousel-item');
 const prevBtn = document.getElementById('carouselPrev');
