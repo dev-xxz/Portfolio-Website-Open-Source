@@ -1,65 +1,893 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>zeroxlx | Portfolio</title>
-  <link rel="icon" href="assets/noFilter.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zxrro portfolio</title>
+    <link rel="icon" type="image/png" href="pfp.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030305;
+            --surface: rgba(20, 20, 25, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #ff0055;
+            --accent-alt: #7000ff;
+            --glow: rgba(255, 0, 85, 0.4);
+            --discord-dark: #111214;
+            --discord-bg: #2b2d31;
+            --discord-inner: #1e1f22;
+            --discord-btn: #5865F2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: hideLoader 1s ease-in-out 2s forwards;
+        }
+
+        .loader-logo {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            background: linear-gradient(to right, var(--accent), var(--accent-alt));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            animation: pulseLogo 2s infinite alternate;
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: var(--surface);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            animation: fillBar 1.5s ease-in-out forwards;
+        }
+
+        @keyframes fillBar {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes hideLoader {
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        @keyframes pulseLogo {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        nav {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 15, 20, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 100;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0;
+            animation: fadeDown 1s ease-out 2.2s forwards;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 6rem;
+            opacity: 0;
+            animation: fadeUp 1s ease-out 2.4s forwards;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.6rem 1.4rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge span {
+            color: #23a559;
+            margin-right: 8px;
+        }
+
+        .massive-text {
+            font-size: clamp(3.5rem, 8vw, 6.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -3px;
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .hero-desc {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 3.5rem;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--text-main);
+            color: var(--bg);
+            text-decoration: none;
+            font-weight: 800;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .stat-box:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .stat-num {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: rgba(255, 0, 85, 0.5);
+            transform: translateY(-5px);
+            background: rgba(30, 30, 35, 0.8);
+        }
+
+        .skill-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 0, 85, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        .project-card h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255,255,255,0.05);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .contact-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 2000px;
+            padding: 4rem 0;
+        }
+
+        #discord-card {
+            width: 380px;
+            background: var(--discord-dark);
+            border-radius: 16px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease;
+            position: relative;
+        }
+
+        .d-banner {
+            height: 150px;
+            background: linear-gradient(135deg, #18191c, #0b0b0d);
+            position: relative;
+            border-radius: 16px 16px 0 0;
+            overflow: hidden;
+        }
+
+        .d-banner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .d-profile-sec {
+            padding: 0 16px 16px;
+            position: relative;
+        }
+
+        .d-avatar-wrap {
+    position: absolute;
+    top: -105px; 
+    left: 16px;
+    width: 120px;
+    height: 120px;
+    background: var(--discord-dark);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+        .d-avatar {
+            width: 104px;
+            height: 104px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .d-status-wrap {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 32px;
+            height: 32px;
+            background: var(--discord-dark);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .d-status {
+            width: 22px;
+            height: 22px;
+            background: #23a559;
+            border-radius: 50%;
+        }
+
+        .d-badges {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            display: flex;
+            gap: 4px;
+            background: var(--discord-dark);
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            z-index: 2;
+        }
+
+        .d-badge-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+
+        .d-content {
+            margin-top: 80px; 
+            background: var(--discord-dark);
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .d-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #f2f3f5;
+            line-height: 1.2;
+            word-wrap: break-word;
+        }
+
+        .d-user {
+            font-size: 1rem;
+            color: #f2f3f5;
+            margin-bottom: 8px;
+        }
+
+        .d-custom-status {
+            font-size: 0.95rem;
+            color: #dbdee1;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            word-wrap: break-word;
+        }
+
+        .d-inner-card {
+            background: var(--discord-inner);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .d-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #b5bac1;
+            margin-bottom: 8px;
+        }
+
+        .d-about {
+            font-size: 0.9rem;
+            color: #dbdee1;
+            line-height: 1.5;
+        }
+
+        .d-roles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .d-role {
+            background: var(--discord-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: #dbdee1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .d-role-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .d-activity {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .d-act-img-wrap {
+            position: relative;
+        }
+
+        .d-act-img {
+            width: 64px;
+            height: 64px;
+            background: #0078d7;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .d-act-small {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            width: 24px;
+            height: 24px;
+            background: var(--discord-inner);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .d-act-small-inner {
+            width: 20px;
+            height: 20px;
+            background: #23a559;
+            border-radius: 50%;
+        }
+
+        .d-act-text h4 {
+            font-size: 0.9rem;
+            color: #f2f3f5;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .d-act-text p {
+            font-size: 0.85rem;
+            color: #b5bac1;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
+
+        .d-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--discord-btn);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .d-btn:hover {
+            background: #4752c4;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translate(-50%, -40px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        @media (max-width: 900px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .massive-text { font-size: 3rem; }
+            nav { width: 95%; padding: 1rem; }
+            .nav-links { gap: 1rem; }
+        }
+    </style>
 </head>
 <body>
 
-  <nav>
-        <img src="assets/noFilter.png" alt="PFP" class="logo" />
-    <ul>
-      <li><button href="#projects">What I do</button></li>
-      <li><a href="#contact">Reach out</a></li>
-    </ul>
-  </nav>
+    <div id="loader">
+        <div class="loader-logo">ZXRRO</div>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
 
-  <header id="hero" class="hero">
-    <h1>Hey, im zeroxlx</h1>
-<p>
-  <span class="tech-typeform">Roblox GUI Developer & Game Re-engineer</span>
-</p>
+    <nav>
+        <div class="logo">ZXRRO<span>.</span></div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#expertise">Expertise</a>
+            <a href="#projects">Work</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
 
+    <div class="container">
+        
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="badge"><span>●</span> Available for new projects</div>
+                <h1 class="massive-text">
+                    BUILDING DIGITAL <br>
+                    <span class="gradient-text">EXPERIENCES.</span>
+                </h1>
+                <p class="hero-desc">
+                    I am a full-stack developer specializing in high-performance backends, secure architecture, and flawless user interfaces. I build modern applications from the ground up.
+                </p>
+                <a href="#projects" class="btn-primary">View Projects</a>
+            </div>
+        </section>
 
-<section id="about" class="about-section">
-  <div class="about-container">
-    <h2>About Me</h2>
-    <p>
-      Hey, I'm a passionate roblox developer and I focus on refactoring games and GUI - wether that'd be redesigning and recoding GUI objects, or designing ones from the ground up. Other than that, I also do LUA Scripting. In my time as a Roblox Developer, I have contributed to over 900K Visits across different games I did work on.
-    </p>
-    <p>
-      I'm constantly exploring new methods, looks and design to always give users the "woah" feeling when they interact with the game. I have worked on multiple projects, and everyone i've worked with have appreciated the work I delivered, and I do both commisions and employment. If the project isn't very big, I don't require payment, as it is simply free learning for. (though for bigger projects pay is needed for my time)
-    </p>
-    <p>
-      As mentioned, I mainly focus on refactoring (modernizing) games. Most of my work is done on Roleplay Games, and mostly those who include free models that gives errors, puts a large load on the players' systems and ultimately causes the game to lag and be heavy (spoiler: it doesnt need to be!)
-    </p>
-  </div>
-</section>
+        <section id="about" class="reveal">
+            <h2 class="section-title">About Me</h2>
+            <div class="grid-2">
+                <div class="about-text">
+                    <p>With a strong foundation in both frontend and backend technologies, I focus on building complete, scalable web applications. My approach prioritizes writing clean, maintainable code while delivering exceptional user experiences.</p>
+                    <p>Over the last 3 years, I've developed everything from complex authentication systems and custom dashboards to sleek, highly-optimized landing pages. I thrive in environments where performance and security are paramount.</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-num">3+</div>
+                        <div style="color: var(--text-muted)">Years Experience</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-num">99%</div>
+                        <div style="color: var(--text-muted)">Project Success</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <section id="projects" class="about-section">
-  <div class="about-container">
-    <h2>What I do</h2>
-    <p>
-      As mentioned, i've contributed to a large amount of place visits, and also done work on games that are unreleased. My work is mostly done on smaller communities, but I also work on bigger projects here and then.
-    </p>
-    <p>
-    Refactoring: What I focus on is refactoring of games. This is the process where the game is "modernized" and optimized to have better performance, a modern look and better functtionality. I have about 2 years of experience in this field, and I also do some basic building and scripting.
-    </p>
-  </div>
-</section>
+        <section id="expertise" class="reveal">
+            <h2 class="section-title">Expertise</h2>
+            <div class="skills-grid">
+                
+                <div class="skill-card">
+                    <h4>Backend Development</h4>
+                    <div class="skill-bar"><div class="skill-fill" style="width: 95%;"></div></div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">PHP, Laravel, Node.js, and RESTful APIs. Building robust server-side architecture and secure data handling.</p>
+                </div>
 
-  <section id="contact" class="contact-section">
-  <h2>Contact Me</h2>
-  <p>Feel free to DM me on roblox for commisions:</p>
-  <a href="https://www.roblox.com/users/17388080/profile" class="contact-email">https://www.roblox.com/users/17388080/profile</a>
-</section>
+                <div class="skill-card">
+                    <h4>Frontend Architecture</h4>
+                    <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">JavaScript (ES6+), React, CSS3, Tailwind. Creating responsive, intuitive, and accessible user interfaces.</p>
+                </div>
 
-  <script src="script.js"></script>
+                <div class="skill-card">
+                    <h4>Database Management</h4>
+                    <div class="skill-bar"><div class="skill-fill" style="width: 85%;"></div></div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">MySQL, PostgreSQL, MongoDB. Designing efficient schemas and optimizing complex queries.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="projects" class="reveal">
+            <h2 class="section-title">Selected Work</h2>
+            <div class="projects-grid">
+                
+                <div class="project-card">
+                    <h3>Project Viking</h3>
+                    <p>A WIP custom html/css notification JavaScript library to create smooth notification/toast popups.</p>
+                    <div class="tech-tags mono">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">Javascript</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Nytron</h3>
+                    <p>Developed a fully functional website for the CS2 Cheat Config seller Nytron.</p>
+                    <div class="tech-tags mono">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">Javascript</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>MySploit</h3>
+                    <p>Designed and deployed a simple and clean website for a up and coming roblox executor. Focused on conversion rate optimization and fluid animations while maintaining a perfect performance score.</p>
+                    <div class="tech-tags mono">
+                        <span class="tag">Javascript</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">HTML</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact" class="reveal">
+            <h2 class="section-title" style="justify-content: center;">Let's Connect</h2>
+            
+            <div class="contact-wrapper" id="d-wrapper">
+                <div id="discord-card">
+                    
+                    <div class="d-banner">
+                        <img src="banner.jpg" class="d-banner-img" alt="Banner">
+                    </div>
+                    
+                    <div class="d-profile-sec">
+                        <div class="d-avatar-wrap">
+                            <img src="pfp.jpg" alt="ZXRRO" class="d-avatar" onerror="this.src='https://via.placeholder.com/104/111214/ff0055?text=zxrro'">
+                            <div class="d-status-wrap">
+                                <div class="d-status"></div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="d-content">
+                            <div class="d-name">zxrro</div>
+                            
+                            <div class="d-custom-status">
+                                .hxxvn
+                            </div>
+                            
+                            <div class="d-inner-card">
+                                <div class="d-label">Playing a game</div>
+                                <div class="d-activity">
+                                    <div class="d-act-img-wrap">
+                                        <div class="d-act-img">
+                                            <svg width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M2 18V6l6-2v16l-6-2zm8 1v-2h12v2H10zm0-4v-2h12v2H10zm0-4V9h12v2H10zm0-4V5h12v2H10z"/></svg>
+                                        </div>
+                                        <div class="d-act-small">
+                                            <div class="d-act-small-inner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-act-text">
+                                        <h4>Visual Studio Code</h4>
+                                        <p>Editing index.html</p>
+                                        <p>Workspace: Portfolio</p>
+                                        <p>01:45:20 elapsed</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="d-btn" onclick="navigator.clipboard.writeText('.hxxvn'); alert('Discord username copied');">Send Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            © 2026 Zxrro.
+        </footer>
+
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        setTimeout(() => {
+            document.querySelectorAll('.reveal').forEach((el) => {
+                observer.observe(el);
+            });
+        }, 2000);
+
+        const dWrapper = document.getElementById('d-wrapper');
+        const dCard = document.getElementById('discord-card');
+
+        if (window.matchMedia("(hover: hover)").matches) {
+            dWrapper.addEventListener('mousemove', (e) => {
+                const rect = dWrapper.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                const rotateX = (-y / 20).toFixed(2);
+                const rotateY = (x / 20).toFixed(2);
+                
+                dCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            dWrapper.addEventListener('mouseleave', () => {
+                dCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            });
+        }
+    </script>
 </body>
 </html>
-
-
